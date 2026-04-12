@@ -1,0 +1,41 @@
+{
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "superpowers@superpowers-marketplace": true,
+    "superpowers@claude-plugins-official": true
+  },
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "sk-5abb8b041c93544530fe1c9439d",
+    "ANTHROPIC_BASE_URL": "http://ccr.client.yzjop.com/claude-code",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "teammateMode": "tmux",
+  "alwaysThinkingEnabled": true,
+  "permissions": {
+    "allow": [
+      "Bash(mkdir *)",
+      "Bash(java *)",
+      "Bash(git add *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "WebSearch",
+      "Bash(javac *)",
+      "Bash(curl -L -o *)",
+      "Bash(chmod *)",
+      "Bash(xargs javap:*)",
+      "Bash(unzip *)",
+      "Bash(timeout * ./gradlew bootRun 2>&1 *)",
+      "Bash(xargs -I {} unzip -l {})",
+      "Bash(find:*)",
+      "Bash(javap:*)",
+      "Bash(./gradlew clean:*)",
+      "Read(/data/home/heng_xu/work/program/idea_workhome/**)",
+      "Read(/data/home/heng_xu/work/program/apache-maven-3.8.6/**)",
+      "Read(//**)",
+      "Bash(jar *)",
+      "Bash(wc:*)",
+      "Bash(./gradlew *)"
+    ]
+  }
+}
