@@ -5,7 +5,6 @@
     "superpowers@claude-plugins-official": true
   },
   "env": {
-    "ANTHROPIC_AUTH_TOKEN": "sk-5abb8b041c93544530fe1c9439d",
     "ANTHROPIC_BASE_URL": "http://ccr.client.yzjop.com/claude-code",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
