@@ -46,13 +46,29 @@ if [ -f "$CONFIG_DIR/settings.json" ]; then
     log "  ✓ settings.json restored"
 fi
 
-# Restore skills
+# Restore skills (local ones from repo)
 if [ -d "$CONFIG_DIR/skills" ]; then
     log "Restoring skills..."
     mkdir -p "$CLAUDE_DIR/skills"
-    cp -r "$CONFIG_DIR/skills"/* "$CLAUDE_DIR/skills/" 2>/dev/null || true
-    log "  ✓ skills/ restored"
+    # Copy only actual directories/files, skip symlinks (they need npm install)
+    for item in "$CONFIG_DIR/skills"/*; do
+        if [ -d "$item" ] && [ ! -L "$item" ]; then
+            cp -r "$item" "$CLAUDE_DIR/skills/"
+        fi
+    done
+    log "  ✓ skills/ restored (local only)"
 fi
+
+# Install external skills via npx skills
+log "Installing external skills..."
+EXTERNAL_SKILLS=(
+    "decebals/claude-code-java@java-code-review"
+)
+for skill in "${EXTERNAL_SKILLS[@]}"; do
+    log "  Installing: $skill"
+    npx skills add "$skill" -g -y 2>/dev/null || log "    WARNING: Failed to install $skill"
+done
+log "  ✓ external skills installed"
 
 # Restore agents
 if [ -d "$CONFIG_DIR/agents" ]; then
