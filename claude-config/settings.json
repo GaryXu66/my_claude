@@ -1,15 +1,8 @@
 {
-  "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true,
-    "superpowers@superpowers-marketplace": true,
-    "superpowers@claude-plugins-official": true
-  },
   "env": {
     "ANTHROPIC_BASE_URL": "http://ccr.client.yzjop.com/claude-code",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
-  "teammateMode": "tmux",
-  "alwaysThinkingEnabled": true,
   "permissions": {
     "allow": [
       "Bash(mkdir *)",
@@ -22,10 +15,10 @@
       "Bash(javac *)",
       "Bash(curl -L -o *)",
       "Bash(chmod *)",
-      "Bash(xargs javap:*)",
+      "Bash(xargs *)",
       "Bash(unzip *)",
       "Bash(timeout * ./gradlew bootRun 2>&1 *)",
-      "Bash(xargs -I {} unzip -l {})",
+      "Bash(xargs -I *)",
       "Bash(find:*)",
       "Bash(javap:*)",
       "Bash(./gradlew clean:*)",
@@ -36,5 +29,13 @@
       "Bash(wc:*)",
       "Bash(./gradlew *)"
     ]
-  }
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "superpowers@superpowers-marketplace": true,
+    "superpowers@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true,
+  "teammateMode": "tmux",
+  "model": "opus[1m]"
 }
