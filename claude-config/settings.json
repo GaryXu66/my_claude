@@ -30,6 +30,7 @@
       "Bash(./gradlew *)"
     ]
   },
+  "model": "opus[1m]",
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "superpowers@superpowers-marketplace": true,
@@ -37,5 +38,5 @@
   },
   "alwaysThinkingEnabled": true,
   "teammateMode": "tmux",
-  "model": "opus[1m]"
+  "theme": "dark-daltonized"
 }
