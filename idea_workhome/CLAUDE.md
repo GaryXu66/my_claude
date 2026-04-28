@@ -10,6 +10,21 @@
 
 具体的构建命令，参考每个独立工程目录下的CLAUDE.md。
 
+### 构建前必读 IDEA 配置
+
+**在测试、构建任何工程之前，必须先读取该工程 `.idea` 目录下的配置文件**，获取本地构建环境信息。
+
+需要关注的配置文件：
+
+| 文件 | 关键信息 |
+|------|----------|
+| `.idea/gradle.xml` | Gradle 安装路径（`gradleHome`）、Gradle JVM 版本、Gradle Distribution 类型 |
+| `.idea/misc.xml` | 项目 JDK 版本（`project-jdk-name`）、语言级别（`languageLevel`） |
+| `.idea/compiler.xml` | 字节码编译目标级别（`bytecodeTargetLevel`） |
+| `.idea/encodings.xml` | 项目文件编码 |
+
+这些配置反映了你在 IDEA 中的本地构建环境设置，构建命令应基于这些配置执行。
+
 ## 业务领域
 
 本代码库包含 30+ 业务领域，完整业务领域信息，请参阅：
