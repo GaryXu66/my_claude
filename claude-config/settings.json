@@ -27,7 +27,8 @@
       "Read(//**)",
       "Bash(jar *)",
       "Bash(wc:*)",
-      "Bash(./gradlew *)"
+      "Bash(./gradlew *)",
+      "Bash(sed *)"
     ]
   },
   "model": "opus[1m]",
