@@ -32,6 +32,13 @@ fi
 # Create .claude directory if not exists
 mkdir -p "$CLAUDE_DIR"
 
+# Restore CLAUDE.md (global project instructions)
+if [ -f "$CONFIG_DIR/CLAUDE.md" ]; then
+    log "Restoring CLAUDE.md..."
+    cp "$CONFIG_DIR/CLAUDE.md" "$CLAUDE_DIR/CLAUDE.md"
+    log "  ✓ CLAUDE.md restored"
+fi
+
 # Restore settings.json (merge with existing, keep local secrets)
 if [ -f "$CONFIG_DIR/settings.json" ]; then
     log "Restoring settings.json..."

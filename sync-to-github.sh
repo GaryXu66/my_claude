@@ -38,6 +38,12 @@ fi
 # Sync Claude config files
 log "Syncing Claude config files..."
 
+# CLAUDE.md - global project instructions
+if [ -f "$CLAUDE_DIR/CLAUDE.md" ]; then
+    cp "$CLAUDE_DIR/CLAUDE.md" "$REPO_DIR/claude-config/CLAUDE.md"
+    log "  - CLAUDE.md"
+fi
+
 # settings.json - remove sensitive fields
 if [ -f "$CLAUDE_DIR/settings.json" ]; then
     mkdir -p "$REPO_DIR/claude-config"
