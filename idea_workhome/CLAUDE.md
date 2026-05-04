@@ -68,6 +68,44 @@ server:
    cd /data/home/heng_xu/work/program/idea_workhome/{项目名}
    ```
 
+## 用户组织领域架构规范
+
+**完整架构图参见**：`用户组织领域架构图.md`
+
+在进行用户组织领域相关的业务代码开发、需求分析、架构设计时，**必须遵循该文件中定义的层级关系**，具体规则如下：
+
+### 层级定义与工程归属
+
+| 层级 | 工程 | 职责边界 |
+|------|------|----------|
+| 网关层 | `api-gateway`、`openaccess` | 流量入口、路由、鉴权、限流，不承载业务逻辑 |
+| 对外开放应用层 | `openorg`、`openadmin`、`openimport`、`openid`、`opendata-control`、`space`、`innermanage` | 对外暴露 REST 接口，编排业务逻辑，调用核心层 |
+| 数据同步层 | `opensync`、`syncdata`、`openimport`（Kafka消费端） | 处理第三方系统的增量/全量同步，不直接对外暴露接口 |
+| 核心业务层 | `usercore-service`、`passport-service`、`baseaccount-service`、`stakeholder-service`、`orgunit-rest` | 领域核心数据存储与业务规则，仅通过 RPC 对内暴露 |
+| 状态通知层 | `statusUser-rest`、`statusNotice-rest` | 用户状态管理与变更广播，单向依赖核心层 |
+| 支撑服务层 | `authserver`、`invite-service`、`snsapi` | 通用支撑能力，被多个上层服务复用 |
+
+### 开发时必须遵守的层级规则
+
+1. **禁止跨层调用**：上层可以调用下层，**严禁下层反向调用上层**。
+   - ❌ `usercore-service` 不能调用 `openorg`
+   - ❌ `baseaccount-service` 不能调用 `openimport`
+   - ✅ `openorg` 可以调用 `usercore-service`
+
+2. **新增接口归属判断**：
+   - 需要对第三方/外部系统暴露的接口 → 放在**对外开放应用层**（如 `openorg`、`openimport`）
+   - 仅供内部服务间调用的接口 → 放在**核心业务层**，以 RPC 形式暴露
+   - 第三方数据同步逻辑 → 放在**数据同步层**（`openimport` 或 `opensync`）
+   - 用户状态相关变更通知 → 放在**状态通知层**
+
+3. **新增工程归属判断**：新增工程前，先判断其职责属于哪个层级，不得随意创建游离于架构之外的服务。
+
+4. **数据写入路径**：所有用户/组织数据的最终写入必须经过 `usercore-service`，不得绕过核心层直接操作数据库。
+
+5. **认证链路**：对外开放应用层的接口需要 Token 校验时，统一调用 `authserver`，不得自行实现 Token 逻辑。
+
+---
+
 ## 全局开发规范
 
 ### 依赖使用规范
@@ -320,3 +358,10 @@ public class XxxKafkaConfig {
 - [ ] KafkaListener 是否显式指定了 `containerFactory` 参数
 - [ ] 配置命名是否符合 `{集群名}-kafka-bootstrap-servers` 等规范
 - [ ] 多套 Kafka 集群是否都有独立的 bootstrap-servers 配置
+
+**用户组织领域架构规范**：
+- [ ] 新增接口是否放在了正确的层级工程中
+- [ ] 是否存在下层调用上层的情况
+- [ ] 用户/组织数据写入是否经过 `usercore-service`
+- [ ] Token 校验是否统一走 `authserver`
+- [ ] 第三方同步逻辑是否放在了 `openimport` 或 `opensync`
