@@ -68,6 +68,18 @@ server:
    cd /data/home/heng_xu/work/program/idea_workhome/{项目名}
    ```
 
+## 文档输出规范
+
+**所有生成的方案文档（架构图、设计文档、分析报告等），统一输出到：**
+
+```
+/data/home/heng_xu/work/program/idea_workhome/docs/
+```
+
+不得输出到其他目录，也不得直接放在 `idea_workhome` 根目录下。
+
+---
+
 ## 用户组织领域架构规范
 
 **完整架构图参见**：`用户组织领域架构图.md`
