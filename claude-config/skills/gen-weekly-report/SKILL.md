@@ -16,7 +16,7 @@ description: Use when generating 徐衡的「AI原生日历会议小组」周报
 - 工具链目录：`/data/home/heng_xu/work/program/idea_workhome/docs/周报/scripts/`
 - 禅道 MCP：`http://mcp.client.yzjop.com/mcp/zentao/stream`（注意是 HTTP JSON-RPC，不是 SSE）
 - 主数据源群：「日历-小群」`groupId=6a327781e4b05fbbe5356aad`（仅本组成员、6/17 起）
-- 花名册/账号映射：`team.json` + `account_map.json`（12/13 人禅道账号已定位；吴洲峰未定位）
+- 花名册/账号映射：`team.json` + `account_map.json`（13/13 人禅道账号已全部定位）
 - 基线/示例报告（含完整 CSS 与结构）：`docs/周报/AI原生日历会议小组-周报-20260615至20260624.html`
 - 渲染模板：`docs/周报/scripts/report_template.html`
 - 输出目录：`docs/周报/`，命名 `<小组名>-周报-<start>至<end>.html`
@@ -36,12 +36,13 @@ description: Use when generating 徐衡的「AI原生日历会议小组」周报
 3. **渲染**：拷贝 `report_template.html`（或最近一期报告）作基线，填入：
    - 统计卡片 + Bug/任务明细表（数据全部取自 report_data，Bug 链接 `https://pms.kdweibo.cn:60443/zentao/bug-view-{id}.html`，任务 `task-view-{id}.html`）
    - 概括①-⑦、亮点/需关注、下周 P0/P1 —— 基于 `chat.weekly_report_candidates` + `summary` 撰写
+   - **【评价原则】亮点/组员状态以"实际交付产出"为准**（功能上线、架构/组件落地、客户阻塞问题解决、需求推进），**不要把 bug 解决数量当唯一或主要标准**。bug 数只是佐证；要以"交付了什么、解决了什么用户/业务问题"来评判。例：林健宁禅道 done=0 但交付了时间选择器组件化重构+yun-ui 通用 TimePicker 落地，应列为亮点而非"需关注"。
 4. 顶部"数据说明"块：更新统计周期、账号定位情况、人名匹配口径。
 5. 另存到 `docs/周报/`。
 
 ## 常见坑（必读）
 - **已关闭 bug 会漏查**：bug 解决后 status 变 `closed`。查 `resolvedBy` 必须 `status=all` 再按 `resolvedDate` 过滤，否则漏掉"本周解决且已关闭"的 bug。脚本已处理，手工查注意。
-- **账号格式不规则**：武超=`chao_sw_wu`(带 infix)、孔维辰曦=`chenxi_kw`、张姝=`sugar_zhang`(昵称)。新增成员先查 `account_map.json`；没命中用 `python3 zentao.py actions <候选account>` 探测，再无命中用云之家 `fullPinyin` 变体。
+- **账号格式不规则**：武超=`chao_sw_wu`(带 infix)、孔维辰曦=`chenxi_kw`、张姝=`sugar_zhang`(昵称)、吴洲峰=`zhoufeng_wu`。新增成员先查 `account_map.json`；没命中用 `python3 zentao.py actions <候选account>` 探测，再无命中用云之家 `fullPinyin` 变体。**注意：`user_actions` 返回 0 条不代表账号不存在**——可能是该人近期无动态(如吴洲峰曾被误判)，应用 `bugs`/`tasks` 命令二次确认或直接问用户。
 - **人名匹配口径**：禅道 MCP 只返回拼音 account，**不**返回"武超-后端"这类带职位的真实姓名——所以匹配按 account 做；聊天侧姓名用 `yzj_chat.py userinfo <userId>` 权威解析。
 - **未解决 bug 计数**含产品岗(张姝)收集的需求 bug，写报告时区分"开发 bug"与"产品/需求 bug"。
 - **群 6/17 才建立**：早于 6/17 的数据靠成员周报回顾 + 禅道记录补全。
