@@ -27,16 +27,17 @@ description: Use when generating 徐衡的「AI原生日历会议小组」周报
    cd /data/home/heng_xu/work/program/idea_workhome/docs/周报/scripts
    python3 collect_weekly.py --start 2026-06-22 --end 2026-06-28
    ```
-   （日期范围用户指定，未指定则问；默认到"今天"。）
+   collect_weekly.py 内部会：取 openToken + 拉群消息 + 拉禅道数据 + **git fetch 各工程到最新并统计提交**（8 个已 clone 工程）。`--no-git` 可跳过代码产出。
 2. **读 report_data JSON**，关注：
    - `summary` —— 统计卡片数字（done_tasks / resolved_bugs / closed_bugs / opened / active_tasks / unresolved_bugs_assigned / accounts_located）
    - `members.<姓名>` —— 每人 done/active 任务、resolved/closed/opened/active bug
    - `chat.weekly_report_candidates` —— 各成员周报原文（撰写叙述的依据）
    - `resolved_bugs_detail` / `closed_bugs_detail` / `active_bugs_detail` —— 带 id/title/severity/openedBy 的明细
+   - `git.per_member` / `git.per_project` —— 每人/每工程的 commits/insertions/deletions/files/churn_ratio/recent_subjects
 3. **渲染**：拷贝 `report_template.html`（或最近一期报告）作基线，填入：
-   - 统计卡片 + Bug/任务明细表（数据全部取自 report_data，Bug 链接 `https://pms.kdweibo.cn:60443/zentao/bug-view-{id}.html`，任务 `task-view-{id}.html`）
-   - 概括①-⑦、亮点/需关注、下周 P0/P1 —— 基于 `chat.weekly_report_candidates` + `summary` 撰写
-   - **【评价原则】亮点/组员状态以"实际交付产出"为准**（功能上线、架构/组件落地、客户阻塞问题解决、需求推进），**不要把 bug 解决数量当唯一或主要标准**。bug 数只是佐证；要以"交付了什么、解决了什么用户/业务问题"来评判。例：林健宁禅道 done=0 但交付了时间选择器组件化重构+yun-ui 通用 TimePicker 落地，应列为亮点而非"需关注"。
+   - 统计卡片 + Bug/任务明细表 + **⑧ 代码产出与质量表**（数据全部取自 report_data，Bug 链接 `https://pms.kdweibo.cn:60443/zentao/bug-view-{id}.html`，任务 `task-view-{id}.html`）
+   - 概括①-⑦、亮点/需关注、下周 P0/P1 —— 基于 `chat.weekly_report_candidates` + `summary` + `git.per_member` 撰写
+   - **【评价原则】亮点/组员状态以"实际交付产出"为准**（功能上线、架构/组件落地、客户阻塞问题解决、需求推进、代码提交），**不要把 bug 解决数量当唯一或主要标准**。bug/commits 数只是佐证。禅道漏录但 git 有提交的（如吴洲峰），应按实际代码产出认可其贡献。
 4. 顶部"数据说明"块：更新统计周期、账号定位情况、人名匹配口径。
 5. 另存到 `docs/周报/`。
 
@@ -46,7 +47,8 @@ description: Use when generating 徐衡的「AI原生日历会议小组」周报
 - **人名匹配口径**：禅道 MCP 只返回拼音 account，**不**返回"武超-后端"这类带职位的真实姓名——所以匹配按 account 做；聊天侧姓名用 `yzj_chat.py userinfo <userId>` 权威解析。
 - **未解决 bug 计数**含产品岗(张姝)收集的需求 bug，写报告时区分"开发 bug"与"产品/需求 bug"。
 - **群 6/17 才建立**：早于 6/17 的数据靠成员周报回顾 + 禅道记录补全。
-- **数字必须可追溯**：报告里每个 bug/任务号都来自 report_data.json，**不得编造**。某项无数据就如实标"数据待补充"。
+- **数字必须可追溯**：报告里每个 bug/任务号/commits 都来自 report_data.json，**不得编造**。某项无数据就如实标"数据待补充"。
+- **禅道≠git，必须交叉看**：禅道任务/Bug 漏录很常见（前端不关任务、后端不录禅道），判断产出要结合 git 提交。例：吴洲峰禅道 0 产出但 git 本周 23 commits 跨 4 工程。代码产出维度见⑧。git 用 `fetch`（非 pull，避免工作分支冲突）；提交人按邮箱前缀映射 account_map，**密码已在 credential.helper=store 缓存，脚本里不要写密码**。
 
 ## 工具速查（手工排查用）
 ```
@@ -58,6 +60,9 @@ python3 yzj_chat.py token                       # 取 openToken
 python3 yzj_chat.py msgs [groupId] [start] [end]
 python3 yzj_chat.py userinfo <userId>           # 查发送人真实姓名
 python3 yzj_chat.py resolve-msgs [groupId] [start] [end]
+python3 git_stats.py fetch                      # 更新所有工程到最新(fetch)
+python3 git_stats.py stats [start] [end]        # 提交统计
+python3 git_stats.py all [start] [end]          # fetch+统计→json
 ```
 
 ## 小组成员（13 人）
