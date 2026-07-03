@@ -16,7 +16,7 @@ description: Use when generating 徐衡的「AI原生日历会议小组」周报
 - 工具链目录：`/data/home/heng_xu/work/program/idea_workhome/docs/周报/scripts/`
 - 禅道 MCP：`http://mcp.client.yzjop.com/mcp/zentao/stream`（注意是 HTTP JSON-RPC，不是 SSE）
 - 主数据源群：「日历-小群」`groupId=6a327781e4b05fbbe5356aad`（仅本组成员、6/17 起）
-- 花名册/账号映射：`team.json` + `account_map.json`（13/13 人禅道账号已全部定位）
+- 花名册/账号映射：`team.json` + `account_map.json`（12/12 人禅道账号已全部定位；杨俊艺 2026-07-03 已离职移出小组，不再统计）
 - 基线/示例报告（含完整 CSS 与结构）：`docs/周报/AI原生日历会议小组-周报-20260615至20260624.html`
 - 渲染模板：`docs/周报/scripts/report_template.html`
 - 输出目录：`docs/周报/`，命名 `<小组名>-周报-<start>至<end>.html`
@@ -65,5 +65,7 @@ python3 git_stats.py stats [start] [end]        # 提交统计
 python3 git_stats.py all [start] [end]          # fetch+统计→json
 ```
 
-## 小组成员（13 人）
-武超(后端)、展会荣(测试)、林健宁(前端)、张姝(产品)、谭智文(后端)、刘飞洋(后端)、张艺琼(前端)、申明辉(前端)、李一萍(前端)、孔维辰曦(交互UI设计)、杨俊艺(前端)、刘振兴(后端)、吴洲峰(后端)。组长徐衡。
+## 小组成员（12 人）
+武超(后端)、展会荣(测试)、林健宁(前端)、张姝(产品)、谭智文(后端)、刘飞洋(后端)、张艺琼(前端)、申明辉(前端)、李一萍(前端)、孔维辰曦(交互UI设计)、刘振兴(后端)、吴洲峰(后端)。组长徐衡。
+
+**杨俊艺**（前端）已于 2026-07-03 离职，已从花名册/账号映射中移除，后续周报不再统计其状态。
