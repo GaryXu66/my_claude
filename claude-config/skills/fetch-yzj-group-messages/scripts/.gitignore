@@ -1,0 +1,5 @@
+# 实际配置含个人凭证，不入库
+config.json
+# 导出的群消息数据
+messages_*.json
+__pycache__/

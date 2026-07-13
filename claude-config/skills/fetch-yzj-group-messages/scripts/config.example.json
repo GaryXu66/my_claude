@@ -1,0 +1,11 @@
+{
+  "_说明": "云之家群消息采集配置模板。复制本文件为 config.json，至少填入 o_id 后即可使用。",
+  "_字段说明": {
+    "o_id": "【必填】你本人的云之家用户 oId。取 openToken 用，决定能访问哪些群。换人用必须改这里。",
+    "appkey": "开放应用 appkey。默认为云之家讯通(openaccess)开放应用通用凭证，通常无需修改。",
+    "signature": "开放应用签名。同上，通常整个应用通用，无需修改；若你的环境使用独立开放应用凭证请替换。"
+  },
+  "o_id": "",
+  "appkey": "eHVudG9uZw",
+  "signature": "Ld3dK-9E7r7HKQMZ9j7m1QOp5zCYqjWKH4xupXTaFMDl2UlJzdeQVYsWhb37scAVK-NCC6wW1A9aOYYNjzoQt-yGvup5xmOBR1SsSp690FN8aX4gUwCpxiarbesQ7Z7m9UL1fi7QUWSPBvFuD4twJNi75dOAZW287UWQHijsSqo"
+}
