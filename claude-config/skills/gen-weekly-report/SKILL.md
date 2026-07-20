@@ -16,7 +16,7 @@ description: Use when generating 徐衡的「AI原生日历会议小组」周报
 - 工具链目录：`/data/home/heng_xu/work/program/idea_workhome/docs/周报/scripts/`
 - 禅道 MCP：`http://mcp.client.yzjop.com/mcp/zentao/stream`（注意是 HTTP JSON-RPC，不是 SSE）
 - 主数据源群：「日历-小群」`groupId=6a327781e4b05fbbe5356aad`（仅本组成员、6/17 起）
-- 花名册/账号映射：`team.json` + `account_map.json`（12/12 人禅道账号已全部定位；杨俊艺 2026-07-03 已离职移出小组，不再统计）
+- 花名册/账号映射：`team.json` + `account_map.json`（11/11 人禅道账号已全部定位；杨俊艺 2026-07-03、张姝 2026-07-20 已离职移出小组，不再统计）
 - 基线/示例报告（含完整 CSS 与结构）：`docs/周报/AI原生日历会议小组-周报-20260615至20260624.html`
 - 渲染模板：`docs/周报/scripts/report_template.html`
 - 补充说明文档模板：`docs/周报/scripts/report_supplementary_template.html`
@@ -56,9 +56,9 @@ description: Use when generating 徐衡的「AI原生日历会议小组」周报
 
 ## 常见坑（必读）
 - **已关闭 bug 会漏查**：bug 解决后 status 变 `closed`。查 `resolvedBy` 必须 `status=all` 再按 `resolvedDate` 过滤，否则漏掉"本周解决且已关闭"的 bug。脚本已处理，手工查注意。
-- **账号格式不规则**：武超=`chao_sw_wu`(带 infix)、孔维辰曦=`chenxi_kw`、张姝=`sugar_zhang`(昵称)、吴洲峰=`zhoufeng_wu`。新增成员先查 `account_map.json`；没命中用 `python3 zentao.py actions <候选account>` 探测，再无命中用云之家 `fullPinyin` 变体。**注意：`user_actions` 返回 0 条不代表账号不存在**——可能是该人近期无动态(如吴洲峰曾被误判)，应用 `bugs`/`tasks` 命令二次确认或直接问用户。
+- **账号格式不规则**：武超=`chao_sw_wu`(带 infix)、孔维辰曦=`chenxi_kw`、吴洲峰=`zhoufeng_wu`。新增成员先查 `account_map.json`；没命中用 `python3 zentao.py actions <候选account>` 探测，再无命中用云之家 `fullPinyin` 变体。**注意：`user_actions` 返回 0 条不代表账号不存在**——可能是该人近期无动态(如吴洲峰曾被误判)，应用 `bugs`/`tasks` 命令二次确认或直接问用户。
 - **人名匹配口径**：禅道 MCP 只返回拼音 account，**不**返回"武超-后端"这类带职位的真实姓名——所以匹配按 account 做；聊天侧姓名用 `yzj_chat.py userinfo <userId>` 权威解析。
-- **未解决 bug 计数**含产品岗(张姝)收集的需求 bug，写报告时区分"开发 bug"与"产品/需求 bug"。
+- **未解决 bug 计数**可能含产品岗收集的需求 bug，写报告时区分"开发 bug"与"产品/需求 bug"。
 - **群 6/17 才建立**：早于 6/17 的数据靠成员周报回顾 + 禅道记录补全。
 - **数字必须可追溯**：报告里每个 bug/任务号/commits 都来自 report_data.json，**不得编造**。某项无数据就如实标"数据待补充"。
 - **禅道≠git，必须交叉看**：禅道任务/Bug 漏录很常见（前端不关任务、后端不录禅道），判断产出要结合 git 提交。例：吴洲峰禅道 0 产出但 git 本周 23 commits 跨 4 工程。代码产出维度见补充说明文档。git 用 `fetch`（非 pull，避免工作分支冲突）；提交人按邮箱前缀映射 account_map，**密码已在 credential.helper=store 缓存，脚本里不要写密码**。
@@ -80,10 +80,10 @@ python3 git_stats.py stats [start] [end]        # 提交统计
 python3 git_stats.py all [start] [end]          # fetch+统计→json
 ```
 
-## 小组成员（12 人）
-武超(后端)、展会荣(测试)、林健宁(前端)、张姝(产品)、谭智文(后端)、刘飞洋(后端)、张艺琼(前端)、申明辉(前端)、李一萍(前端)、孔维辰曦(交互UI设计)、刘振兴(后端)、吴洲峰(后端)。组长徐衡。
+## 小组成员（11 人）
+武超(后端)、展会荣(测试)、林健宁(前端)、谭智文(后端)、刘飞洋(后端)、张艺琼(前端)、申明辉(前端)、李一萍(前端)、孔维辰曦(交互UI设计)、刘振兴(后端)、吴洲峰(后端)。组长徐衡。
 
-**杨俊艺**（前端）已于 2026-07-03 离职，已从花名册/账号映射中移除，后续周报不再统计其状态。
+**杨俊艺**（前端）已于 2026-07-03 离职、**张姝**（产品）已于 2026-07-20 离职，均已从花名册/账号映射中移除，后续周报不再统计。
 
 ## 输出结构总览
 
